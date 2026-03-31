@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# virtual environments
+venv/
+.env/
+.venv/
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# build files
+build/
+dist/
+*.egg-info/

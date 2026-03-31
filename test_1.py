@@ -1,4 +1,4 @@
-#test 1 is to make a program in the cli that gets the best ak deal/ discount/ price etc.. for a ceartain price range and float range
+#test 1 is to make a program in the cli that gets the best ak deal/ discount/ price etc.. for a certain price range and float range
 
 import requests
 from config import CSFLOAT_API_KEY
@@ -7,21 +7,67 @@ headers = {
     "Authorization": CSFLOAT_API_KEY
 }
 
-params = {
-    "limit": 5,
-    "sort_by": "best_deal",
-    "type": "auction",
-    "max_float": 0.1,
-    "min_float": 0.0,
-    "min_price": 1000,
-    "max_price": 100000,
+def define_float_category(float_value):
+    if float_value < 0.07:
+        return "Factory New"
+    elif float_value < 0.15:
+        return "Minimal Wear"
+    elif float_value < 0.38:
+        return "Field-Tested"
+    elif float_value < 0.45:
+        return "Well-Worn"
+    else:
+        return "Battle-Scarred"
+
+def get_ak_deals(price_limit_low, price_limit_high, float_limit_low, float_limit_high, deals_shown, sort_by="best_deal"):
+    params = {
+    "limit": deals_shown,
+    "sort_by": sort_by,
+    "type": "buy_now",
+    "max_float": float_limit_high,
+    "min_float": float_limit_low,
+    "min_price": price_limit_low,
+    "max_price": price_limit_high,
     "category": 0,
     "def_index": 7
 }
 
-response = requests.get("https://csfloat.com/api/v1/listings", 
-                        headers=headers,
-                        params=params)
-data = response.json()
+    try:
+        response = requests.get(
+            "https://csfloat.com/api/v1/listings",
+            headers=headers,
+            params=params,
+        )
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Failed to fetch listings: {e}")
+        return
 
-print(data)
+    data = response.json()
+    if "data" not in data:
+        print("Unexpected API response format: missing 'data' field.")
+        return
+
+    listings = data["data"]
+    
+    seen = set()
+    for listing in listings:
+        item = listing["item"]
+        name = item["item_name"]
+        
+        if name in seen:
+            continue  # skip duplicates 
+        
+        seen.add(name) 
+
+        print(
+            f"Item: {name} | "
+            f"Price: {listing['price']} | "
+            f"Float: {item['float_value']} "
+            f"({define_float_category(item['float_value'])})"
+        )
+get_ak_deals(price_limit_low=1000, 
+             price_limit_high=100000, 
+             float_limit_low=0.0, 
+             float_limit_high=1.0, 
+             deals_shown=10)

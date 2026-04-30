@@ -22,6 +22,7 @@ class Skin():
         self.rarity = rarity
         self.float_category = float_category
     def __repr__(self):
+        return format_data(self.name,self.float_category,self.float,self.price,self.rarity)
 
 
 def define_float_category(float_value):

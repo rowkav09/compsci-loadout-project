@@ -1,5 +1,6 @@
-#test 1 is to make a program in the cli that gets the best ak deal/ discount/ price etc.. for a certain price range and float range
+#this expands on test_1 and formats the price data in classes so data can be tabulated nicely when printed.
 
+from tabulate import tabulate
 import requests
 from config import CSFLOAT_API_KEY
 
@@ -7,6 +8,20 @@ from config import CSFLOAT_API_KEY
 headers = {
     "Authorization": CSFLOAT_API_KEY
 }
+
+
+def format_data(name,float_category,float,price,rarity):
+    formatted = [name,float_category,round(float,4),f'£{price/100}',rarity]
+    return formatted
+
+class Skin():
+    def __init__(self,float,price,name,rarity,float_category):
+        self.float = float
+        self.price = price
+        self.name = name 
+        self.rarity = rarity
+        self.float_category = float_category
+    def __repr__(self):
 
 
 def define_float_category(float_value):

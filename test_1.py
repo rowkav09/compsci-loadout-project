@@ -7,6 +7,7 @@ headers = {
     "Authorization": CSFLOAT_API_KEY
 }
 
+
 def define_float_category(float_value):
     if float_value < 0.07:
         return "Factory New"

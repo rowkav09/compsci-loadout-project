@@ -1,6 +1,8 @@
 import requests
 import tabulate
 from item_definition_indexes import weapons
+import json
+
 headers = {
 }
 params = {
@@ -9,18 +11,20 @@ params = {
 }
 
 
-try:
-    data = requests.get(
-        'https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json',
-        headers=headers,
-        params=params,
-        )
-    data.raise_for_status()
-    data = data.json()
-except requests.RequestException as e:
-    print(f'Failed to fetch listings: {e}')
+# try:
+#     data = requests.get(
+#         'https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json',
+#         headers=headers,
+#         params=params,
+#         )
+#     data.raise_for_status()
+#     data = data.json()
+# except requests.RequestException as e:
+#     print(f'Failed to fetch listings: {e}')
 
 
+with open('data.json', 'r') as file:
+    data = json.load(file)
 def get_id(name):
     for item in weapons:
         if item[1].lower() == name.lower():
@@ -41,7 +45,7 @@ def get_info(name,finish,rarity,crate_n):
     for skin in filtered:
         
         if finish and name:
-            name = f'{(skin.get('weapon') or {}).get('name')==name} | {(skin.get('pattern') or {}).get('name') == finish}'
+            name = f'{(skin.get('weapon') or {}).get('name')==name} | {(skin.get('pattern') or {}).get('name')==finish}'
         elif finish:
             name = f'{(skin.get('weapon') or {}).get('name')} | {(skin.get('pattern') or {}).get('name')==finish}'
         elif name:

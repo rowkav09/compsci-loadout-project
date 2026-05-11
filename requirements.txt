@@ -2,5 +2,4 @@ pip_system_certs
 requests
 dotenv
 tabulate
-urllib.request
 PIL

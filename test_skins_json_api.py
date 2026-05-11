@@ -4,7 +4,7 @@ from item_definition_indexes import weapons
 import json
 import urllib.request
 from PIL import Image
-
+import json
 
 headers = {
 }
@@ -14,69 +14,89 @@ params = {
 }
 
 
-try:
-    data = requests.get(
-        'https://github.com/rowkav09/compsci-loadout-project/blob/main/skins.json',
-        headers=headers,
-        params=params,
-        )
-    data.raise_for_status()
-    data = data.json()
-except requests.RequestException as e:
-    print(f'Failed to fetch listings: {e}')
+# try:
+#     data = requests.get(
+#         'https://github.com/rowkav09/compsci-loadout-project/blob/main/skins.json',
+#         headers=headers,
+#         params=params,
+#         )
+#     data.raise_for_status()
+#     data = data.json()
+# except requests.RequestException as e:
+#     print(f'Failed to fetch listings: {e}')
 
 
-# with open('skins.json', 'r', encoding='utf-8') as file:
-#     data = json.load(file)
-# def get_id(name):
-#     for item in weapons:
-#         if item[1].lower() == name.lower():
-#             return item[0]
-#     return('ivalid item name')
+with open('skins.json', 'r', encoding='utf-8') as file:
+    data = json.load(file)
+def get_id(name):
+    for item in weapons:
+        if item[1].lower() == name.lower():
+            return item[0]
+    return('ivalid item name')
         
 
 
 
 
-def get_info(name,finish,rarity,crate_n):
+def get_info(name=None, finish=None, rarity=None, crate_n=None, weapon_id=None):
+
+    # convert weapon name to id
+    if weapon_id is None:
+        if name:
+            weapon_id = get_id(name)
+        else:
+            print('Please provide a weapon name or weapon id')
+            return
+
+    # invalid name check
+    if isinstance(weapon_id, str):
+        print('Invalid weapon name')
+        return
+
     filtered = [
         skin for skin in data
-        if skin.get('weapon', {}).get('weapon_id') == 507
+        if skin.get('weapon', {}).get('weapon_id') == weapon_id
     ]
-    tabulated = [['item','rarity','case']]
+
+    table = [['item', 'rarity', 'case']]
 
     for skin in filtered:
-        
-        if finish and name:
-            name = f'{(skin.get('weapon') or {}).get('name')==name} | {(skin.get('pattern') or {}).get('name')==finish}'
-        elif finish:
-            name = f'{(skin.get('weapon') or {}).get('name')} | {(skin.get('pattern') or {}).get('name')==finish}'
-        elif name:
-            name = f'{(skin.get('weapon') or {}).get('name')==name} | {(skin.get('pattern') or {}).get('name')}'
-        else:
-            name = f'{(skin.get('weapon') or {}).get('name')} | {(skin.get('pattern') or {}).get('name')}'
-        
-        if rarity:
-            rarity = f'{(skin.get('rarity') or {}).get('name')==rarity}'
-        else:
-            rarity = f'{(skin.get('rarity') or {}).get('name')==rarity}'
-            
-        crate = skin.get('crates') or []
-        if crate:
-            for item in crate:
-                crate_name = crate.get('name')==crate_n if crate else None
-        else:
-            crate_name = crate[0].get('name') if crate else None
-        info = [name,rarity,crate_name]
-        tabulated.append(info)
 
-    final = []
-    for item in tabulated:
-        if item not in final:
-            final.append(item)
+        weapon_name = (skin.get('weapon') or {}).get('name')
+        pattern_name = (skin.get('pattern') or {}).get('name')
+        rarity_name = (skin.get('rarity') or {}).get('name')
 
+        crates = skin.get('crates') or []
 
-    print(tabulate.tabulate(final))
+        # optional filters
+        if finish and pattern_name.lower() != finish.lower():
+            continue
+
+        if rarity and rarity_name.lower() != rarity.lower():
+            continue
+
+        crate_name = None
+
+        if crates:
+            for crate in crates:
+
+                current_crate = crate.get('name')
+
+                # filter by crate
+                if crate_n:
+                    if current_crate.lower() != crate_n.lower():
+                        continue
+
+                crate_name = current_crate
+                break
+
+        item_name = f'{weapon_name} | {pattern_name}'
+
+        table.append([item_name, rarity_name, crate_name])
+
+    print(tabulate.tabulate(table))
+
+get_info(name='flip knife',finish='crimson web')
 
 # url = 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3EVvKD6MKU_cKPKXWHFxLkls7FsSnDqwUl_sWTczoqheHifbwMmD5F1RvlK7Ec_KL6Q_A'
 # urllib.request.urlretrieve(

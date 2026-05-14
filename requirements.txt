@@ -1,3 +1,4 @@
+PySide6
 pip_system_certs
 requests
 dotenv

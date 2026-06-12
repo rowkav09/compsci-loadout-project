@@ -3,4 +3,4 @@ pip_system_certs
 requests
 dotenv
 tabulate
-PIL
+pillow

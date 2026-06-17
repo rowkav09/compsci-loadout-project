@@ -1,9 +1,5 @@
-import requests
 import tabulate
 from item_definition_indexes import weapons
-import json
-import urllib.request
-from PIL import Image
 import json
 
 with open('skins.json', 'r', encoding='utf-8') as file:
@@ -12,7 +8,7 @@ def get_id(name):
     for item in weapons:
         if item[1].lower() == name.lower():
             return item[0]
-    return('invalid item name')
+    return 'invalid item name'
 
 def get_info(name=None, finish=None, rarity=None, crate_n=None, weapon_id=None):
 
@@ -24,59 +20,67 @@ def get_info(name=None, finish=None, rarity=None, crate_n=None, weapon_id=None):
             print('Please provide a weapon name or weapon id')
             return
 
-
     # invalid name check
     if isinstance(weapon_id, str):
         print('Invalid weapon name')
         return
+
     if weapon_id is not None:
         filtered = [
             skin for skin in data
             if skin.get('weapon', {}).get('weapon_id') == weapon_id
         ]
     else:
-        filtered = [
-            skin for skin in data
-        ]
+        filtered = data
 
-    table = [['Item','|','Finish', 'Rarity', 'Case']]
+    table = [['Item', 'Finish', 'Rarity', 'Case']]
 
     for skin in filtered:
 
         weapon_name = (skin.get('weapon') or {}).get('name')
         pattern_name = (skin.get('pattern') or {}).get('name')
         rarity_name = (skin.get('rarity') or {}).get('name')
-        pattern_name = pattern_name if pattern_name is not None else "Vanilla"
-        crates = skin.get('crates') or []
-        
-        if pattern_name is not None:
-            if finish and pattern_name.lower() != finish.lower():
-                continue
 
+        pattern_name = pattern_name if pattern_name is not None else "Vanilla"
+
+        # finish filter
+        if finish and pattern_name.lower() != finish.lower():
+            continue
+
+        # rarity filter
         if rarity and rarity_name.lower() != rarity.lower():
             continue
 
-        crate_name = None
+        crates = skin.get('crates') or []
 
+        # FIXED CASE LOGIC
         if crates:
-            for crate in crates:
+            crate_names = [
+                crate.get('name')
+                for crate in crates
+                if crate.get('name')
+            ]
 
-                current_crate = crate.get('name')
+            # crate filter
+            if crate_n:
+                if not any(
+                    name.lower() == crate_n.lower()
+                    for name in crate_names
+                ):
+                    continue
 
-                # filter by crate
-                if crate_n:
-                    if current_crate.lower() != crate_n.lower():
-                        continue
-
-                crate_name = current_crate
-                break
-        if crate_name is None:
+            crate_name = ", ".join(crate_names)
+        else:
             crate_name = "Collection"
-        #item_name = f'{weapon_name} | {pattern_name}'
 
-        table.append([weapon_name,'|',pattern_name, rarity_name, crate_name])
+        table.append([
+            weapon_name,
+            pattern_name,
+            rarity_name,
+            crate_name
+        ])
 
-    print(tabulate.tabulate(table))
+    print(tabulate.tabulate(table, headers='firstrow', tablefmt='rounded_grid'))
 
 def cli():
     valid = True 

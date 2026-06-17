@@ -1,5 +1,7 @@
+PySide6
 pip_system_certs
 requests
 dotenv
 tabulate
-PIL
+pillow
+pygame

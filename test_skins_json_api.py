@@ -72,7 +72,7 @@ def get_info(name=None, finish=None, rarity=None, crate_n=None, weapon_id=None):
             crate_name = ", ".join(crate_names)
         else:
             crate_name = "Collection"
-
+        count = 0
         table.append([
             weapon_name,
             pattern_name,

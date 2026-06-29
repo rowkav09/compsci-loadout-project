@@ -102,6 +102,16 @@ class Skins:
                 self.get_info(finish=finish)
     def from_weapon_rarity(self, rarity):
                 self.get_info(rarity=rarity)
-
+    def define_float_category(self, float_value):
+        if float_value < 0.07:
+            return "Factory New"
+        elif float_value < 0.15:
+            return "Minimal Wear"
+        elif float_value < 0.38:
+            return "Field-Tested"
+        elif float_value < 0.45:
+            return "Well-Worn"
+        else:
+            return "Battle-Scarred"
 
 

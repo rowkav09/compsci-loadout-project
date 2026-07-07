@@ -47,7 +47,8 @@ def get_ak_deals(price_limit_low, price_limit_high, float_limit_low, float_limit
     "min_price": price_limit_low,
     "max_price": price_limit_high,
     "category": 0,
-    "def_index": 7
+    "def_index": 507,
+    "paint_index": 417
 }
 
     try:
@@ -85,7 +86,7 @@ def get_ak_deals(price_limit_low, price_limit_high, float_limit_low, float_limit
             f"({define_float_category(item['float_value'])})"
         )
 get_ak_deals(price_limit_low=1000, 
-             price_limit_high=100000, 
+             price_limit_high=100000000, 
              float_limit_low=0.0, 
              float_limit_high=1.0, 
              deals_shown=10)

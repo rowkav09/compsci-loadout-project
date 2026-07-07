@@ -1,6 +1,13 @@
-import tabulate
 from item_definition_indexes import weapons
 import json
+from tabulate import tabulate
+import requests
+from config import CSFLOAT_API_KEY
+
+
+headers = {
+    "Authorization": CSFLOAT_API_KEY
+}
 
 from test_skins_json_api import get_id
 class Skins:

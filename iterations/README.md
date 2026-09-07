@@ -13,6 +13,10 @@ development process.
 - `qt/` - early Qt / PySide6 experiments.
 - `old-gui/` - reserved for earlier GUI implementations that may later be
   archived here without altering their internal structure.
+- `api-experiments/` - early CSFloat API scripts exploring price/float filtering,
+  superseded by `model.py`.
+- `cli-prototypes/` - the original interactive CLI prototype for skin lookup,
+  superseded by the `Skins` class in `model.py`.
 
 These files are not part of the final application's main execution path.
 

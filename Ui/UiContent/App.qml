@@ -1,18 +1,42 @@
 import QtQuick
+import QtQuick.Layouts
 import Ui
+import "components"
+import "pages"
 
 Window {
-    width: mainScreen.width
-    height: mainScreen.height
+    id: window
 
+    width: 1280
+    height: 800
     visible: true
-    title: "Ui"
+    title: "CS2 Loadout Generator"
+    color: Constants.backgroundColor
 
-    Screen01 {
-        id: mainScreen
+    readonly property var destinations: ["Loadout Generator", "Manual Search", "Settings"]
 
-        anchors.centerIn: parent
+    RowLayout {
+        anchors.fill: parent
+        spacing: 0
+
+        NavRail {
+            Layout.fillHeight: true
+            Layout.preferredWidth: Constants.navRailWidth
+            destinations: window.destinations
+            currentIndex: pageStack.currentIndex
+            onDestinationSelected: (index) => pageStack.currentIndex = index
+        }
+
+        StackLayout {
+            id: pageStack
+            objectName: "pageStack"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            currentIndex: 0
+
+            LoadoutGeneratorPage {}
+            ManualSearchPage {}
+            SettingsPage {}
+        }
     }
-
 }
-

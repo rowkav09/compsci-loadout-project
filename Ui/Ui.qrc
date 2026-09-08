@@ -1,0 +1,15 @@
+<RCC>
+    <qresource>
+        <file>qtquickcontrols2.conf</file>
+        <file>Ui.qmlproject</file>
+        <file>Ui/Constants.qml</file>
+        <file>Ui/EventListModel.qml</file>
+        <file>Ui/EventListSimulator.qml</file>
+        <file>Ui/qmldir</file>
+        <file>UiContent/App.qml</file>
+        <file>UiContent/pages/LoadoutGeneratorPage.ui.qml</file>
+        <file>UiContent/pages/ManualSearchPage.ui.qml</file>
+        <file>UiContent/pages/SettingsPage.ui.qml</file>
+        <file>UiContent/Screen01.ui.qml</file>
+    </qresource>
+</RCC>

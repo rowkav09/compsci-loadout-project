@@ -11,6 +11,10 @@ qt6_add_qml_module(UiContent
     QML_FILES
         "App.qml"
         "Screen01.ui.qml"
+        "components/NavRail.qml"
+        "components/PageHeader.qml"
+        "components/SectionPanel.qml"
+        "components/SkinCard.qml"
         "pages/LoadoutGeneratorPage.ui.qml"
         "pages/ManualSearchPage.ui.qml"
         "pages/SettingsPage.ui.qml"

@@ -11,8 +11,9 @@ import QtQuick.Layouts
 import Ui
 import "../components"
 
-// Design-time layout only: no settings are persisted or read from the
-// backend yet.
+// Appearance controls are live (bound to Constants, which every page reads
+// its colors/fonts from). Everything else on this page is still
+// design-time only - not persisted or read from the backend.
 Item {
     id: root
     width: 1920
@@ -32,6 +33,86 @@ Item {
                 subtitle: "App preferences and data-source configuration."
                 Layout.fillWidth: true
                 Layout.margins: Constants.spacingL
+            }
+
+            SectionPanel {
+                Layout.fillWidth: true
+                Layout.leftMargin: Constants.spacingL
+                Layout.rightMargin: Constants.spacingL
+                title: "Appearance"
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: Constants.spacingM
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Dark theme"
+                            font: Constants.font
+                            color: Constants.textColor
+                            Layout.fillWidth: true
+                        }
+
+                        Switch {
+                            id: darkModeSwitch
+                            checked: Constants.darkMode
+                        }
+
+                        Connections {
+                            target: darkModeSwitch
+                            function onToggled() {
+                                Constants.darkMode = darkModeSwitch.checked
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Text size"
+                            font: Constants.font
+                            color: Constants.textColor
+                            Layout.fillWidth: true
+                        }
+
+                        ComboBox {
+                            id: textSizeCombo
+                            Layout.preferredWidth: 140
+                            model: ["Small", "Normal", "Large"]
+                            currentIndex: 1
+                        }
+
+                        Connections {
+                            target: textSizeCombo
+                            function onActivated(index) {
+                                Constants.fontScale = index === 0 ? 0.85 : (index === 2 ? 1.2 : 1.0)
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Item { Layout.fillWidth: true }
+
+                        Button {
+                            id: resetAppearanceButton
+                            text: "Reset to defaults"
+                        }
+
+                        Connections {
+                            target: resetAppearanceButton
+                            function onClicked() {
+                                Constants.darkMode = false
+                                Constants.fontScale = 1.0
+                                textSizeCombo.currentIndex = 1
+                            }
+                        }
+                    }
+                }
             }
 
             SectionPanel {

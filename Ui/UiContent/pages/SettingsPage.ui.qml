@@ -7,29 +7,80 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
+import Ui
+import "../components"
 
+// Design-time layout only: no settings are persisted or read from the
+// backend yet.
 Item {
     id: root
     width: 1920
     height: 1080
 
-    Pane {
-        id: pane
-        x: 705
-        y: 419
-        width: 200
-        height: 200
+    ScrollView {
+        anchors.fill: parent
+        contentWidth: availableWidth
+        clip: true
 
-        TextArea {
-            id: textArea
-            x: -12
-            y: -12
-            width: 120
-            height: 59
-            text: "Appearance"
-            font.italic: true
-            font.family: "Segoe UI"
-            placeholderText: qsTr("Text Area")
+        ColumnLayout {
+            width: parent.width
+            spacing: Constants.spacingL
+
+            PageHeader {
+                title: "Settings"
+                subtitle: "App preferences and data-source configuration."
+                Layout.fillWidth: true
+                Layout.margins: Constants.spacingL
+            }
+
+            SectionPanel {
+                Layout.fillWidth: true
+                Layout.leftMargin: Constants.spacingL
+                Layout.rightMargin: Constants.spacingL
+                title: "Pricing API Keys"
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: Constants.spacingS
+
+                    Text {
+                        text: "Read from a local .env file (CSFLOAT_API_KEY, BUFF_API_KEY, STEAM_API_KEY). Not editable here yet."
+                        font: Constants.smallFont
+                        color: Constants.mutedTextColor
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    TextField {
+                        Layout.fillWidth: true
+                        placeholderText: "CSFloat API key"
+                        enabled: false
+                    }
+
+                    TextField {
+                        Layout.fillWidth: true
+                        placeholderText: "Steam API key"
+                        enabled: false
+                    }
+                }
+            }
+
+            SectionPanel {
+                Layout.fillWidth: true
+                Layout.leftMargin: Constants.spacingL
+                Layout.rightMargin: Constants.spacingL
+                Layout.bottomMargin: Constants.spacingL
+                title: "About"
+
+                Text {
+                    text: "CS2 Loadout Generator — a work-in-progress A-Level Computer Science project."
+                    font: Constants.smallFont
+                    color: Constants.mutedTextColor
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+            }
         }
     }
 }

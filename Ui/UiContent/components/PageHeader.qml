@@ -13,9 +13,7 @@ ColumnLayout {
 
     Text {
         text: root.title
-        font.family: Constants.font.family
-        font.pixelSize: Constants.font.pixelSize * 1.3
-        font.bold: true
+        font: Constants.largeFont
         color: Constants.textColor
     }
 

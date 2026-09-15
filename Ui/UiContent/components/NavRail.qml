@@ -30,9 +30,7 @@ Rectangle {
 
                 Layout.fillWidth: true
                 text: modelData
-                font.family: Constants.font.family
-                font.pixelSize: Constants.font.pixelSize
-                font.bold: root.currentIndex === index
+                font: Constants.font
                 color: Constants.textColor
 
                 MouseArea {

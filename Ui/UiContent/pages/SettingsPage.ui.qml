@@ -58,6 +58,7 @@ Item {
                         Switch {
                             id: darkModeSwitch
                             checked: Constants.darkMode
+                            font: Constants.font
                         }
 
                         Connections {
@@ -80,9 +81,11 @@ Item {
 
                         ComboBox {
                             id: textSizeCombo
-                            Layout.preferredWidth: 140
+                            wheelEnabled: true
+                            Layout.preferredWidth: 100
                             model: ["Small", "Normal", "Large"]
                             currentIndex: 1
+                            font: Constants.font
                         }
 
                         Connections {
@@ -101,12 +104,13 @@ Item {
                         Button {
                             id: resetAppearanceButton
                             text: "Reset to defaults"
+                            font: Constants.font
                         }
 
                         Connections {
                             target: resetAppearanceButton
                             function onClicked() {
-                                Constants.darkMode = false
+                                Constants.darkMode = true
                                 Constants.fontScale = 1.0
                                 textSizeCombo.currentIndex = 1
                             }
@@ -126,7 +130,7 @@ Item {
                     spacing: Constants.spacingS
 
                     Text {
-                        text: "Read from a local .env file (CSFLOAT_API_KEY, BUFF_API_KEY, STEAM_API_KEY). Not editable here yet."
+                        text: "Enter API keys for pricing services."
                         font: Constants.smallFont
                         color: Constants.mutedTextColor
                         wrapMode: Text.WordWrap
@@ -134,15 +138,17 @@ Item {
                     }
 
                     TextField {
+                        font: Constants.font
                         Layout.fillWidth: true
                         placeholderText: "CSFloat API key"
-                        enabled: false
+                        echoMode: TextInput.Password
                     }
 
                     TextField {
+                        font: Constants.font
                         Layout.fillWidth: true
                         placeholderText: "Steam API key"
-                        enabled: false
+                        echoMode: TextInput.Password
                     }
                 }
             }
@@ -155,7 +161,7 @@ Item {
                 title: "About"
 
                 Text {
-                    text: "CS2 Loadout Generator — a work-in-progress A-Level Computer Science project."
+                    text: "CS2 Loadout Generator — Find your dream loadout given budget and preferences in one click."
                     font: Constants.smallFont
                     color: Constants.mutedTextColor
                     wrapMode: Text.WordWrap

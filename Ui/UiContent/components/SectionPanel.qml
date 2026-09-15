@@ -23,9 +23,7 @@ Rectangle {
         Text {
             visible: root.title.length > 0
             text: root.title
-            font.family: Constants.font.family
-            font.pixelSize: Constants.font.pixelSize
-            font.bold: true
+            font: Constants.font
             color: Constants.textColor
         }
     }

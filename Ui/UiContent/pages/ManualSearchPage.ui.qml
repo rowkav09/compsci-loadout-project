@@ -52,21 +52,25 @@ Item {
                 TextField {
                     Layout.fillWidth: true
                     placeholderText: "Search by skin or weapon name..."
+                    font: Constants.font
                 }
 
                 ComboBox {
                     Layout.preferredWidth: 140
                     model: ["Any Weapon", "AK-47", "M4A4", "AWP", "Desert Eagle", "Glock-18"]
+                    font: Constants.font
                 }
 
                 ComboBox {
                     Layout.preferredWidth: 140
                     model: ["Any Rarity", "Consumer", "Industrial", "Mil-Spec", "Restricted", "Classified", "Covert"]
+                    font: Constants.font
                 }
 
                 ComboBox {
                     Layout.preferredWidth: 140
                     model: ["Any Crate"]
+                    font: Constants.font
                 }
             }
         }

@@ -20,6 +20,7 @@ Rectangle {
     Button {
         id: button
         text: qsTr("Press me")
+        font: Constants.font
         anchors.verticalCenter: parent.verticalCenter
         checkable: true
         anchors.horizontalCenter: parent.horizontalCenter
@@ -34,7 +35,7 @@ Rectangle {
         id: label
         text: qsTr("Hello Ui")
         anchors.top: button.bottom
-        font.family: Constants.font.family
+        font: Constants.font
         anchors.topMargin: 45
         anchors.horizontalCenter: parent.horizontalCenter
 

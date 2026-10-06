@@ -85,6 +85,10 @@ Item {
                             Layout.preferredWidth: 100
                             model: ["Small", "Normal", "Large"]
                             currentIndex: 1
+                            background: Rectangle {
+                            color: "gray"
+                            radius: Constants.radius
+                            }
                             font: Constants.font
                         }
 

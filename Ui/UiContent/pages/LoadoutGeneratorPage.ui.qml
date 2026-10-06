@@ -49,6 +49,10 @@ Item {
                 Button {
                     text: "Generate Loadout"
                     font: Constants.font
+                    background: Rectangle {
+                    color: "gray"
+                    radius: Constants.radius
+                    }
                 }
             }
 
@@ -66,12 +70,20 @@ Item {
                         Layout.preferredWidth: 160
                         model: ["Any Rarity", "Mil-Spec", "Restricted", "Classified", "Covert"]
                         font: Constants.font
+                        background: Rectangle {
+                        color: "gray"
+                        radius: Constants.radius
+                        }
                     }
 
                     ComboBox {
                         Layout.preferredWidth: 160
                         model: ["Any Wear", "Factory New", "Minimal Wear", "Field-Tested", "Well-Worn", "Battle-Scarred"]
                         font: Constants.font
+                        background: Rectangle {
+                        color: "gray"
+                        radius: Constants.radius
+                        }
                     }
 
                     Item { Layout.fillWidth: true }

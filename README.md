@@ -11,41 +11,6 @@ A work-in-progress A-Level Computer Science project for browsing and filtering C
 - Convert float values into CS2 wear categories
 - Desktop UI built with PySide6/QML
 
-## Requirements
-
-- Python 3.10 or newer
-- `pip`
-- PySide6-compatible desktop environment for the GUI
-
-## Installation
-
-```bash
-git clone https://github.com/rowkav09/compsci-loadout-project.git
-cd compsci-loadout-project
-python -m venv .venv
-```
-
-Activate the virtual environment:
-
-```bash
-# macOS / Linux
-source .venv/bin/activate
-
-# Windows PowerShell
-.venv\Scripts\Activate.ps1
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Run the desktop prototype
-
-```bash
-python main.py
-```
 
 ## Optional API configuration
 

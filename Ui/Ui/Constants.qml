@@ -44,6 +44,7 @@ QtObject {
     readonly property int spacingS: 6
     readonly property int spacingM: 12
     readonly property int spacingL: 20
+    readonly property int radius: 3
 
     readonly property int navRailWidth: 160
 }

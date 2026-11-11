@@ -11,21 +11,24 @@ import QtQuick.Layouts
 import Ui
 import "../components"
 
-// Design-time layout only: the loadout slots below use static sample data
-// and are not wired to the skins repository / controller yet.
 Item {
     id: root
     width: 1920
     height: 1080
 
-    ListModel {
-        id: sampleLoadout
+    property var loadoutResults: []
 
-        ListElement { weaponName: "AK-47"; skinName: "Redline"; wear: "Field-Tested"; rarity: "Classified" }
-        ListElement { weaponName: "M4A4"; skinName: "Asiimov"; wear: "Well-Worn"; rarity: "Covert" }
-        ListElement { weaponName: "Desert Eagle"; skinName: "Blaze"; wear: "Factory New"; rarity: "Restricted" }
-        ListElement { weaponName: "Karambit"; skinName: "Doppler"; wear: "Factory New"; rarity: "Covert" }
+    function findSkin(weaponName, finishName) {
+        var results = skinsController.search(weaponName, finishName, "", "")
+        return results.length > 0 ? results[0] : {}
     }
+
+    Component.onCompleted: loadoutResults = [
+        findSkin("AK-47", "Redline"),
+        findSkin("M4A4", "Asiimov"),
+        findSkin("Desert Eagle", "Blaze"),
+        findSkin("Karambit", "Doppler")
+    ]
 
     ScrollView {
         anchors.fill: parent
@@ -50,8 +53,9 @@ Item {
                     text: "Generate Loadout"
                     font: Constants.font
                     background: Rectangle {
-                    color: "gray"
-                    radius: Constants.radius
+                        color: Constants.surfaceColor
+                        border.color: Constants.borderColor
+                        radius: Constants.radius
                     }
                 }
             }
@@ -71,8 +75,9 @@ Item {
                         model: ["Any Rarity", "Mil-Spec", "Restricted", "Classified", "Covert"]
                         font: Constants.font
                         background: Rectangle {
-                        color: "gray"
-                        radius: Constants.radius
+                            color: Constants.surfaceColor
+                            border.color: Constants.borderColor
+                            radius: Constants.radius
                         }
                     }
 
@@ -81,8 +86,9 @@ Item {
                         model: ["Any Wear", "Factory New", "Minimal Wear", "Field-Tested", "Well-Worn", "Battle-Scarred"]
                         font: Constants.font
                         background: Rectangle {
-                        color: "gray"
-                        radius: Constants.radius
+                            color: Constants.surfaceColor
+                            border.color: Constants.borderColor
+                            radius: Constants.radius
                         }
                     }
 
@@ -98,13 +104,14 @@ Item {
                 spacing: Constants.spacingM
 
                 Repeater {
-                    model: sampleLoadout
+                    model: root.loadoutResults
 
                     delegate: SkinCard {
-                        weaponName: model.weaponName
-                        skinName: model.skinName
-                        wear: model.wear
-                        rarity: model.rarity
+                        weaponName: modelData.weapon_name || "Unknown weapon"
+                        skinName: modelData.name || "Unknown skin"
+                        wear: ["Field-Tested", "Well-Worn", "Factory New", "Factory New"][index]
+                        rarity: modelData.rarity || "Unknown"
+                        imageSource: modelData.image || ""
                     }
                 }
             }

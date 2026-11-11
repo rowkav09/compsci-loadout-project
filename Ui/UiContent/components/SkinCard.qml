@@ -40,7 +40,12 @@ Rectangle {
             Image {
                 anchors.fill: parent
                 anchors.margins: 2
-                source: root.imageSource
+                source: root.imageSource.toString().length > 0
+                    ? root.imageSource.toString().replace(/\/$/, "") + "/96fx96f"
+                    : ""
+                sourceSize: Qt.size(96, 96)
+                asynchronous: true
+                cache: true
                 fillMode: Image.PreserveAspectFit
                 visible: root.imageSource.toString().length > 0
             }

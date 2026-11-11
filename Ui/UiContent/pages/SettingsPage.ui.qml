@@ -86,8 +86,9 @@ Item {
                             model: ["Small", "Normal", "Large"]
                             currentIndex: 1
                             background: Rectangle {
-                            color: "gray"
-                            radius: Constants.radius
+                                color: Constants.surfaceColor
+                                border.color: Constants.borderColor
+                                radius: Constants.radius
                             }
                             font: Constants.font
                         }

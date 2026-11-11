@@ -7,6 +7,7 @@ from dataclasses import dataclass
 class Skin:
     id: str
     name: str
+    image: str
     weapon_name: str | None
     weapon_id: int | None
     finish: str
@@ -22,6 +23,7 @@ class Skin:
         return cls(
             id=raw.get("id", ""),
             name=raw.get("name", ""),
+            image=raw.get("image") or "",
             weapon_name=weapon.get("name"),
             weapon_id=weapon.get("weapon_id"),
             finish=pattern.get("name") or "Vanilla",

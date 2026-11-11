@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -5,8 +6,10 @@ from PySide6.QtCore import QUrl
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
+from controller import SkinsController
 
 if __name__ == "__main__":
+    os.environ.setdefault("QT_QUICK_CONTROLS_STYLE", "Material")
     app = QGuiApplication(sys.argv)
 
     app.setApplicationName("CS2 Loadout Generator")
@@ -17,6 +20,8 @@ if __name__ == "__main__":
 
 
     engine = QQmlApplicationEngine()
+    skins_controller = SkinsController()
+    engine.rootContext().setContextProperty("skinsController", skins_controller)
 
     # Allow App.qml to resolve: import Ui
     engine.addImportPath(str(ui_dir.resolve()))
